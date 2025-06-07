@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: xcheck
+  main:
+    allow-circular-references: true
+  # 数据库配置
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://150.138.73.10:44272/team_a
+    username: postgres
+    password: NSc7pBDzGYxmMfjM
+
+# Mybatis
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.zyy.entity
+  configuration:
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
+
+# spring事务管理日志
+logging:
+  level:
+    org.springframework.jdbc.support.JdbcTransactionManager: debug
+
+zyy:
+  jwt:
+    # 设置jwt签名加密时使用的秘钥
+    admin-secret-key: zyy
+    # 设置jwt过期时间
+    # admin-ttl: 7200000
+    admin-ttl: 36000000
+    # 设置前端传递过来的令牌名称
+    admin-token-name: token

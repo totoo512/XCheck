@@ -44,7 +44,7 @@ public class AutoFillAspect {
 
         // 要赋值的数据
         LocalDateTime now = LocalDateTime.now();
-        Long currentId = BaseContext.getCurrentId();
+        Integer currentId = BaseContext.getCurrentId();
 
         // 约定第一个参数为实体类
         Object entity = args[0];

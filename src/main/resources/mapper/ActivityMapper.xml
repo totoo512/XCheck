@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyy.mapper.ActivityMapper">
+    <insert id="insert">
+        insert into activity (create_user, location_id, region_id, title, start_time, end_time, description,
+                              create_time, update_time)
+        values (#{createUser}, #{locationId}, #{regionId}, #{title}, #{startTime}, #{endTime}, #{description},
+                #{createTime}, #{updateTime});
+    </insert>
+</mapper>

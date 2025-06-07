@@ -37,10 +37,10 @@ public class UserController {
      * @param userDTO
      * @return
      */
-    @PostMapping()
-    public Result save(@RequestBody UserDTO userDTO) {
+    @PostMapping("/register")
+    public Result<UserLoginVO> register(@RequestBody UserDTO userDTO) {
         log.info("新增用户：{}", userDTO);
-        userService.save(userDTO);
-        return Result.success();
+        UserLoginVO userLoginVO = userService.register(userDTO);
+        return Result.success(userLoginVO);
     }
 }

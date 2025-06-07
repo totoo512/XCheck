@@ -7,5 +7,5 @@ import com.zyy.vo.UserLoginVO;
 public interface UserService {
     UserLoginVO login(UserLoginDTO userLoginDTO);
 
-    void save(UserDTO userDTO);
+    UserLoginVO register(UserDTO userDTO);
 }

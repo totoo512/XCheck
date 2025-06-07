@@ -15,6 +15,7 @@ import com.zyy.vo.UserLoginVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import javax.security.auth.login.AccountLockedException;
@@ -60,26 +61,41 @@ public class UserServiceImpl implements UserService {
                 jwtProperties.getAdminTtl(),
                 claims);
 
-        UserLoginVO userLoginVO = UserLoginVO.builder()
+        return UserLoginVO.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .name(user.getName())
                 .token(token)
                 .build();
-        return userLoginVO;
     }
 
     /**
-     * 新增用户
+     * 用户注册
      * @param userDTO
+     * @return
      */
-    public void save(UserDTO userDTO) {
+    @Transactional
+    public UserLoginVO register(UserDTO userDTO) {
         User user = new User();
         BeanUtils.copyProperties(userDTO, user);
 
         // 对密码进行md5加密
         user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
-
         userMapper.insert(user);
+
+        // 注册成功后，生成jwt令牌
+        Map<String, Object> claims = new HashMap<>();
+        claims.put(JwtClaimsConstant.USER_ID, user.getId());
+        String token = JwtUtil.createJWT(
+                jwtProperties.getAdminSecretKey(),
+                jwtProperties.getAdminTtl(),
+                claims);
+
+        return UserLoginVO.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .name(user.getName())
+                .token(token)
+                .build();
     }
 }

@@ -7,7 +7,7 @@
         from "user" where username = #{username}
     </select>
 
-    <insert id="insert" parameterType="com.zyy.entity.User">
+    <insert id="insert" parameterType="com.zyy.entity.User" useGeneratedKeys="true" keyProperty="id">
         insert into "user"(username, password, name, create_time, update_time)
         values (#{username}, #{password}, #{name}, #{createTime}, #{updateTime})
     </insert>

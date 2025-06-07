@@ -2,6 +2,7 @@ package com.zyy.service.impl;
 
 import com.zyy.constant.JwtClaimsConstant;
 import com.zyy.constant.MessageConstant;
+import com.zyy.dto.UserDTO;
 import com.zyy.dto.UserLoginDTO;
 import com.zyy.entity.User;
 import com.zyy.exception.AccountNotFoundException;
@@ -11,6 +12,7 @@ import com.zyy.properties.JwtProperties;
 import com.zyy.service.UserService;
 import com.zyy.utils.JwtUtil;
 import com.zyy.vo.UserLoginVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -65,5 +67,19 @@ public class UserServiceImpl implements UserService {
                 .token(token)
                 .build();
         return userLoginVO;
+    }
+
+    /**
+     * 新增用户
+     * @param userDTO
+     */
+    public void save(UserDTO userDTO) {
+        User user = new User();
+        BeanUtils.copyProperties(userDTO, user);
+
+        // 对密码进行md5加密
+        user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
+
+        userMapper.insert(user);
     }
 }

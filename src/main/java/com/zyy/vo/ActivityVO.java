@@ -1,6 +1,7 @@
 package com.zyy.vo;
 
 import com.zyy.dto.PointDTO;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;

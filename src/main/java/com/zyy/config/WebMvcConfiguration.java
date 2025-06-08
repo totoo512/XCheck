@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -57,5 +58,24 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         converter.setObjectMapper(new JacksonObjectMapper());
         // 将自己的消息转换器加入容器，并放在首位
         converters.add(0, converter);
+    }
+
+    /**
+     * 配置跨域请求
+     * @param registry
+     */
+    protected void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**") // 应用于所有路径
+                // 允许的前端域名（根据你的实际部署地址修改）
+                .allowedOrigins(
+                        "http://localhost:8080",       // 本地开发
+                        "http://192.168.31.199",       // 生产前端
+                        "http://127.0.0.1:5500"       // 生产前端
+//                        "https://www.yourfrontend.com" // 生产带www的前端
+                )
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // 允许的HTTP方法
+                .allowedHeaders("*")               // 允许所有请求头
+                .allowCredentials(true)            // 允许携带凭证（如cookies）
+                .maxAge(3600);                    // 预检请求缓存时间（秒）
     }
 }

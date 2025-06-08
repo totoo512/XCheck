@@ -1,10 +1,13 @@
 package com.zyy.mapper;
 
 import com.zyy.annotation.AutoFill;
+import com.zyy.dto.ActivityListDTO;
 import com.zyy.entity.Activity;
 import com.zyy.enumeration.OperationType;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 @Mapper
 public interface ActivityMapper {
@@ -22,4 +25,11 @@ public interface ActivityMapper {
      */
     @Select("select * from activity where id = #{id}")
     Activity selectById(Integer id);
+
+    /**
+     * 活动列表按条件查询
+     * @param activityListDTO
+     * @return
+     */
+    List<Activity> listQuery(ActivityListDTO activityListDTO);
 }

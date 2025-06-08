@@ -1,12 +1,15 @@
 package com.zyy.controller;
 
 import com.zyy.dto.ActivityDTO;
+import com.zyy.dto.ActivityListDTO;
 import com.zyy.result.Result;
 import com.zyy.service.ActivityService;
 import com.zyy.vo.ActivityVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/activity")
@@ -38,5 +41,17 @@ public class ActivityController {
         log.info("根据id查询活动: {}", id);
         ActivityVO activityVO = activityService.getById(id);
         return Result.success(activityVO);
+    }
+
+    /**
+     * 活动列表按条件查询
+     * @param activityListDTO
+     * @return
+     */
+    @GetMapping("/list")
+    public Result<List<ActivityVO>> list(ActivityListDTO activityListDTO) {
+        log.info("活动列表按条件查询: {}", activityListDTO);
+        List<ActivityVO> activityVOList = activityService.listQuery(activityListDTO);
+        return Result.success(activityVOList);
     }
 }

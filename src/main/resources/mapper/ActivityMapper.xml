@@ -8,4 +8,21 @@
         values (#{createUser}, #{locationId}, #{regionId}, #{radius}, #{title}, #{startTime}, #{endTime}, #{description},
                 #{createTime}, #{updateTime});
     </insert>
+    <select id="listQuery" resultType="com.zyy.entity.Activity">
+        select * from activity
+        <where>
+            <if test="createName != null">
+                and create_name like concat('%', #{createName}, '%')
+            </if>
+            <if test="title != null">
+                and title like concat('%', #{title}, '%')
+            </if>
+            <if test="startTime != null">
+                and start_time >= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and end_time &lt;= #{endTime}
+            </if>
+        </where>
+    </select>
 </mapper>

@@ -14,4 +14,6 @@ public interface ActivityService {
     List<ActivityVO> listQuery(ActivityListDTO activityListDTO);
 
     void deleteById(Integer id);
+
+    void update(ActivityDTO activityDTO);
 }

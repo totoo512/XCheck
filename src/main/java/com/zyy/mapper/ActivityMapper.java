@@ -39,4 +39,11 @@ public interface ActivityMapper {
      */
     @Delete("delete from activity where id = #{id};")
     void deleteById(Integer id);
+
+    /**
+     * 修改活动
+     * @param activity
+     */
+    @AutoFill(OperationType.UPDATE)
+    void update(Activity activity);
 }

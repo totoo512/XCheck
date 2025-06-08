@@ -66,4 +66,16 @@ public class ActivityController {
         activityService.deleteById(id);
         return Result.success();
     }
+
+    /**
+     * 修改活动
+     * @param activityDTO
+     * @return
+     */
+    @PutMapping()
+    public Result update(@RequestBody ActivityDTO activityDTO) {
+        log.info("修改活动: {}", activityDTO);
+        activityService.update(activityDTO);
+        return Result.success();
+    }
 }

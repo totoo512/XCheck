@@ -25,4 +25,10 @@ public interface LocationMapper {
      */
     @Delete("delete from location where activity_id = #{activityId}")
     void deleteByActivityId(Integer activityId);
+
+    /**
+     * 修改地点
+     * @param location
+     */
+    void update(Location location);
 }

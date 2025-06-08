@@ -12,6 +12,10 @@ import java.time.LocalDateTime;
 public class ActivityDTO {
 
     /**
+     * 活动id
+     */
+    private Integer id;
+    /**
      * 位置
      */
     private PointDTO location;

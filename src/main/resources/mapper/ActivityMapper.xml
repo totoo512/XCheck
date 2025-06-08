@@ -36,4 +36,19 @@
             </if>
         </where>
     </select>
+
+    <update id="update">
+        update activity
+        <set>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="radius != null">radius = #{radius},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

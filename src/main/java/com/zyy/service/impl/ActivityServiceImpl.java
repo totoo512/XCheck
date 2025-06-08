@@ -121,4 +121,26 @@ public class ActivityServiceImpl implements ActivityService {
         activityMapper.deleteById(id);
         locationMapper.deleteByActivityId(id);
     }
+
+    /**
+     * 修改活动
+     * @param activityDTO
+     */
+    @Transactional
+    public void update(ActivityDTO activityDTO) {
+        Activity activity = new Activity();
+        BeanUtils.copyProperties(activityDTO, activity);
+        // 不修改create_user
+        activityMapper.update(activity);
+
+        // 修改location
+        GeometryFactory geometryFactory = new GeometryFactory();
+        Location  location = Location.builder()
+                .activityId(activityDTO.getId())
+                .geom(geometryFactory.createPoint(new Coordinate(
+                        activityDTO.getLocation().getLongitude(),
+                        activityDTO.getLocation().getLatitude())))
+                .build();
+        locationMapper.update(location);
+    }
 }

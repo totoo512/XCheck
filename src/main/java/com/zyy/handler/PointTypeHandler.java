@@ -6,7 +6,7 @@ import org.apache.ibatis.type.MappedTypes;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
-import org.locationtech.jts.io.WKTWriter;
+
 import java.sql.*;
 
 @MappedTypes(Point.class)

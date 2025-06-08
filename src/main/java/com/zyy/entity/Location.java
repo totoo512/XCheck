@@ -9,5 +9,6 @@ public class Location {
     private Integer id;
     private String name;
     private Point geom;
+    private Integer activityId;
 
 }

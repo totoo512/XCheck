@@ -1,8 +1,8 @@
 package com.zyy.mapper;
 
 import com.zyy.entity.Location;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface LocationMapper {
@@ -14,8 +14,15 @@ public interface LocationMapper {
 
     /**
      * 根据id查询地点
-     * @param locationId
+     * @param activityId
      * @return
      */
-    Location selectById(Integer locationId);
+    Location selectByActivityId(Integer activityId);
+
+    /**
+     * 根据id删除地点
+     * @param activityId
+     */
+    @Delete("delete from location where activity_id = #{activityId}")
+    void deleteByActivityId(Integer activityId);
 }

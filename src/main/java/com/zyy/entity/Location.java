@@ -8,6 +8,6 @@ public class Location {
 
     private Integer id;
     private String name;
-    private String geom;
+    private Point geom;
 
 }

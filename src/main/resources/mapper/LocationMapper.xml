@@ -2,9 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zyy.mapper.LocationMapper">
+    <resultMap id="locationMap" type="Location">
+        <result column="geom" property="geom" typeHandler="com.zyy.handler.PointTypeHandler"/>
+    </resultMap>
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         insert into location (name, geom)
         values (#{name},
-                ST_SetSRID(ST_GeomFromText(#{geom}),4326));
+                ST_GeomFromEWKT(#{geom, typeHandler=com.zyy.handler.PointTypeHandler}));
     </insert>
+    <select id="selectById" resultType="com.zyy.entity.Location" resultMap="locationMap">
+        select id, name, ST_AsEWKT(geom) AS geom from location where id = #{locationId}
+    </select>
 </mapper>

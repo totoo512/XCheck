@@ -1,22 +1,27 @@
-package com.zyy.dto;
+package com.zyy.vo;
 
-import lombok.AllArgsConstructor;
+import com.zyy.dto.PointDTO;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class ActivityDTO {
+public class ActivityVO {
 
     /**
-     * 位置
+     * 活动ID
+     */
+    private Integer id;
+    /**
+     * 创建者名称
+     */
+    private String createName;
+    /**
+     * 地点坐标
      */
     private PointDTO location;
     /**
-     * 可打卡区域，已废弃
+     * 活动可签到范围 废弃
      */
     private PointDTO[] region;
     /**
@@ -36,7 +41,7 @@ public class ActivityDTO {
      */
     private LocalDateTime endTime;
     /**
-     * 活动介绍
+     * 简介
      */
     private String description;
 

@@ -54,4 +54,16 @@ public class ActivityController {
         List<ActivityVO> activityVOList = activityService.listQuery(activityListDTO);
         return Result.success(activityVOList);
     }
+
+    /**
+     * 删除活动
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    public Result delete(@PathVariable Integer id) {
+        log.info("删除活动: {}", id);
+        activityService.deleteById(id);
+        return Result.success();
+    }
 }

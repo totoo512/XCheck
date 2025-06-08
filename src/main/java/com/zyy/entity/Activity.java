@@ -1,6 +1,7 @@
 package com.zyy.entity;
 
 import lombok.Data;
+import org.locationtech.jts.geom.Point;
 
 import java.time.LocalDateTime;
 
@@ -19,14 +20,6 @@ public class Activity {
     * 创建者ID
     */
     private Integer createUser;
-    /**
-    * 地点ID
-    */
-    private Integer locationId;
-    /**
-    * 活动可签到范围ID 废弃
-    */
-    private Integer regionId;
     /**
      * 半径
      */

@@ -4,6 +4,7 @@ import com.zyy.annotation.AutoFill;
 import com.zyy.dto.ActivityListDTO;
 import com.zyy.entity.Activity;
 import com.zyy.enumeration.OperationType;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -23,7 +24,6 @@ public interface ActivityMapper {
      * @param id
      * @return
      */
-    @Select("select * from activity where id = #{id}")
     Activity selectById(Integer id);
 
     /**
@@ -32,4 +32,11 @@ public interface ActivityMapper {
      * @return
      */
     List<Activity> listQuery(ActivityListDTO activityListDTO);
+
+    /**
+     * 根据id删除活动
+     * @param id
+     */
+    @Delete("delete from activity where id = #{id};")
+    void deleteById(Integer id);
 }

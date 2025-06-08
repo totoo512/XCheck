@@ -1,7 +1,6 @@
 package com.zyy.vo;
 
 import com.zyy.dto.PointDTO;
-import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -21,10 +20,6 @@ public class ActivityVO {
      * 地点坐标
      */
     private PointDTO location;
-    /**
-     * 活动可签到范围 废弃
-     */
-    private PointDTO[] region;
     /**
      * 半径
      */

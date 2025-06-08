@@ -16,10 +16,6 @@ public class ActivityDTO {
      */
     private PointDTO location;
     /**
-     * 可打卡区域，已废弃
-     */
-    private PointDTO[] region;
-    /**
      * 半径
      */
     private Integer radius;

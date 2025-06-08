@@ -9,7 +9,6 @@ import com.zyy.entity.Location;
 import com.zyy.entity.User;
 import com.zyy.mapper.ActivityMapper;
 import com.zyy.mapper.LocationMapper;
-import com.zyy.mapper.RegionMapper;
 import com.zyy.mapper.UserMapper;
 import com.zyy.service.ActivityService;
 import com.zyy.vo.ActivityVO;
@@ -30,8 +29,8 @@ public class ActivityServiceImpl implements ActivityService {
     private ActivityMapper activityMapper;
     @Autowired
     private LocationMapper locationMapper;
-    @Autowired
-    private RegionMapper regionMapper;
+//    @Autowired
+//    private RegionMapper regionMapper;
     @Autowired
     private UserMapper userMapper;
 
@@ -44,34 +43,22 @@ public class ActivityServiceImpl implements ActivityService {
         Activity activity = new Activity();
         BeanUtils.copyProperties(activityDTO, activity);
 
+        // 设置创建者ID
         activity.setCreateUser(BaseContext.getCurrentId());
 
-        // locationId regionId
+        // 插入 activity
+        activityMapper.insert(activity);
+
+        // location
         // 插入 location
         GeometryFactory geometryFactory = new GeometryFactory();
-        Location location = new Location();
-        // 若需要可以给地点命名
         Point point = geometryFactory.createPoint(new Coordinate(
                 activityDTO.getLocation().getLongitude(),
                 activityDTO.getLocation().getLatitude()));
+        Location location = new Location();
         location.setGeom(point);
+        location.setActivityId(activity.getId());
         locationMapper.insert(location);
-        activity.setLocationId(location.getId());
-
-        // 插入 region 废弃
-        /*Region region = new Region();
-        PointDTO[] pointDTOS = activityDTO.getRegion();
-
-        Coordinate[] coords = new Coordinate[pointDTOS.length];
-        for (int i = 0; i < pointDTOS.length; i++) {
-            coords[i] = new Coordinate(pointDTOS[i].getLongitude(), pointDTOS[i].getLatitude());
-        }
-        Polygon polygon = geometryFactory.createPolygon(coords);
-        region.setBoundary(polygon.toString());
-        regionMapper.insert(region);
-        activity.setRegionId(region.getId());*/
-
-        activityMapper.insert(activity);
     }
 
     /**
@@ -85,8 +72,7 @@ public class ActivityServiceImpl implements ActivityService {
         BeanUtils.copyProperties(activity, activityVO);
 
         // 设置地点坐标
-//        Region region = regionMapper.selectById(activity.getRegionId());
-        Location location = locationMapper.selectById(activity.getLocationId());
+        Location location = locationMapper.selectByActivityId(activity.getId());
         activityVO.setLocation(new PointDTO(
                 location.getGeom().getX(),
                 location.getGeom().getY()));
@@ -107,7 +93,6 @@ public class ActivityServiceImpl implements ActivityService {
         List<ActivityVO> activityVOList = new java.util.ArrayList<>();
         List<Activity> activityList = activityMapper.listQuery(activityListDTO);
 
-        // 设置地点坐标
         for (Activity activity : activityList) {
             ActivityVO activityVO = new ActivityVO();
             BeanUtils.copyProperties(activity, activityVO);
@@ -116,7 +101,8 @@ public class ActivityServiceImpl implements ActivityService {
             User user = userMapper.selectById(activity.getCreateUser());
             activityVO.setCreateName(user.getName());
 
-            Location location = locationMapper.selectById(activity.getLocationId());
+            // 设置地点坐标
+            Location location = locationMapper.selectByActivityId(activity.getId());
             activityVO.setLocation(new PointDTO(
                     location.getGeom().getX(),
                     location.getGeom().getY()));
@@ -124,5 +110,15 @@ public class ActivityServiceImpl implements ActivityService {
         }
 
         return activityVOList;
+    }
+
+    /**
+     * 删除活动
+     * @param id
+     */
+    @Transactional
+    public void deleteById(Integer id) {
+        activityMapper.deleteById(id);
+        locationMapper.deleteByActivityId(id);
     }
 }

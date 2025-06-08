@@ -8,6 +8,7 @@ public class Region {
 
     private Integer id;
     private String name;
-    private String boundary;
+    // TODO: Polygon类型转换器
+    private Polygon boundary;
 
 }

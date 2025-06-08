@@ -24,9 +24,13 @@ public class Activity {
     */
     private Integer locationId;
     /**
-    * 活动可签到范围ID
+    * 活动可签到范围ID 废弃
     */
     private Integer regionId;
+    /**
+     * 半径
+     */
+    private Integer radius;
     /**
     * 活动标题
     */

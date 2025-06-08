@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
-import javax.security.auth.login.AccountLockedException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +38,7 @@ public class UserServiceImpl implements UserService {
         String username = userLoginDTO.getUsername();
         String password = userLoginDTO.getPassword();
 
-        User user = userMapper.getByUsername(username);
+        User user = userMapper.selectByUsername(username);
         if (user == null) {
             //账号不存在
             throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);

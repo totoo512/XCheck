@@ -12,7 +12,7 @@ public interface UserMapper {
      * @param username
      * @return
      */
-    User getByUsername(String username);
+    User selectByUsername(String username);
 
     /**
      * 新增用户
@@ -20,4 +20,12 @@ public interface UserMapper {
      */
     @AutoFill(OperationType.INSERT)
     void insert(User user);
+
+    /**
+     * 根据id查询用户
+     *
+     * @param createUser
+     * @return
+     */
+    User selectById(Integer createUser);
 }

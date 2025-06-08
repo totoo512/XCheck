@@ -8,6 +8,7 @@ import com.zyy.entity.Activity;
 import com.zyy.entity.Location;
 import com.zyy.entity.User;
 import com.zyy.mapper.ActivityMapper;
+import com.zyy.mapper.CheckinMapper;
 import com.zyy.mapper.LocationMapper;
 import com.zyy.mapper.UserMapper;
 import com.zyy.service.ActivityService;
@@ -33,6 +34,8 @@ public class ActivityServiceImpl implements ActivityService {
 //    private RegionMapper regionMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private CheckinMapper checkinMapper;
 
     /**
      * 新增活动
@@ -120,6 +123,7 @@ public class ActivityServiceImpl implements ActivityService {
     public void deleteById(Integer id) {
         activityMapper.deleteById(id);
         locationMapper.deleteByActivityId(id);
+        checkinMapper.deleteByActivityId(id);
     }
 
     /**

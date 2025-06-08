@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyy.mapper.CheckinMapper">
+    <resultMap id="locationMap" type="com.zyy.entity.Checkin">
+        <result column="geom" property="geom" typeHandler="com.zyy.handler.PointTypeHandler"/>
+    </resultMap>
+
+    <insert id="insert">
+        insert into checkin (activity_id, geom, user_id, checkin_time)
+        values (#{activityId},
+                ST_GeomFromEWKT(#{geom, typeHandler=com.zyy.handler.PointTypeHandler}),
+                #{userId},
+                #{checkinTime})
+    </insert>
+
+    <select id="list" resultType="com.zyy.entity.Checkin" resultMap="locationMap">
+        select id, activity_id, ST_AsEWKT(geom) as geom, user_id, checkin_time
+        from checkin
+        <where>
+            <if test="activityId != null">
+                and activity_id = #{activityId}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="startTime != null">
+                and checkin_time >= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and checkin_time &lt;= #{endTime}
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,6 +1,10 @@
 package com.zyy.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.locationtech.jts.geom.Point;
 
 import java.time.LocalDateTime;
 
@@ -20,9 +24,9 @@ public class Checkin {
     */
     private Integer activityId;
     /**
-    * 实际签到位置地点ID
+    * 实际签到位置地点
     */
-    private Integer locationId;
+    private Point geom;
     /**
     * 用户ID
     */
@@ -31,13 +35,5 @@ public class Checkin {
     * 签到时间
     */
     private LocalDateTime checkinTime;
-    /**
-    * 创建时间
-    */
-    private LocalDateTime createTime;
-    /**
-    * 修改时间
-    */
-    private LocalDateTime updateTime;
 
 }

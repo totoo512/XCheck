@@ -33,4 +33,11 @@
         </where>
     </select>
 
+    <select id="isWithin" resultType="boolean">
+        select st_dwithin(l.geom::geography, ST_GeomFromEWKT(#{geom, typeHandler=com.zyy.handler.PointTypeHandler})::geography, a.radius)
+        from activity a left join location l
+                                  on a.id = l.activity_id
+        where a.id = #{activityId};
+    </select>
+
 </mapper>

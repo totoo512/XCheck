@@ -71,7 +71,8 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                         "http://localhost:8080",       // 本地开发
                         "http://192.168.31.199",       // 生产前端
                         "http://127.0.0.1",       // 生产前端
-                        "http://192.168.214.27"
+                        "http://192.168.214.27",
+                        "http://111.229.121.204"
 //                        "https://www.yourfrontend.com" // 生产带www的前端
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // 允许的HTTP方法

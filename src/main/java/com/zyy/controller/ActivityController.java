@@ -2,8 +2,10 @@ package com.zyy.controller;
 
 import com.zyy.dto.ActivityDTO;
 import com.zyy.dto.ActivityListDTO;
+import com.zyy.dto.PointDTO;
 import com.zyy.result.Result;
 import com.zyy.service.ActivityService;
+import com.zyy.vo.ActivityListByLocationVO;
 import com.zyy.vo.ActivityVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,5 +79,17 @@ public class ActivityController {
         log.info("修改活动: {}", activityDTO);
         activityService.update(activityDTO);
         return Result.success();
+    }
+
+    /**
+     * 根据位置查询活动
+     * @param pointDTO
+     * @return
+     */
+    @GetMapping("/listByLocation")
+    public Result<List<ActivityListByLocationVO>> listByLocation(PointDTO pointDTO) {
+        log.info("根据位置查询活动: {}", pointDTO);
+        List<ActivityListByLocationVO> activityListByLocationVOList = activityService.listByLocation(pointDTO);
+        return Result.success(activityListByLocationVOList);
     }
 }

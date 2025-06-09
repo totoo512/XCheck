@@ -1,7 +1,9 @@
 package com.zyy.interceptor;
 
 import com.zyy.constant.JwtClaimsConstant;
+import com.zyy.constant.MessageConstant;
 import com.zyy.context.BaseContext;
+import com.zyy.exception.UserNotLoginException;
 import com.zyy.properties.JwtProperties;
 import com.zyy.utils.JwtUtil;
 import io.jsonwebtoken.Claims;

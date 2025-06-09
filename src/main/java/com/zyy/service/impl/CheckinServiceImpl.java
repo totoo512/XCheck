@@ -1,10 +1,12 @@
 package com.zyy.service.impl;
 
+import com.zyy.constant.MessageConstant;
 import com.zyy.context.BaseContext;
 import com.zyy.dto.CheckinDTO;
 import com.zyy.dto.CheckinListDTO;
 import com.zyy.dto.PointDTO;
 import com.zyy.entity.Checkin;
+import com.zyy.exception.CheckinOutOfRegionException;
 import com.zyy.mapper.ActivityMapper;
 import com.zyy.mapper.CheckinMapper;
 import com.zyy.mapper.UserMapper;
@@ -39,17 +41,21 @@ public class CheckinServiceImpl implements CheckinService {
         Checkin checkin = new Checkin();
         BeanUtils.copyProperties(checkinDTO, checkin);
 
+        // geom
+        GeometryFactory geometryFactory = new GeometryFactory();
+        checkin.setGeom(geometryFactory.createPoint(new Coordinate(
+                checkinDTO.getLocation().getLongitude(),
+                checkinDTO.getLocation().getLatitude())));
+        if (!checkinMapper.isWithin(checkin)) {
+            throw new CheckinOutOfRegionException(MessageConstant.CHECKIN_FAILED);
+        }
+
         // userId
         checkin.setUserId(BaseContext.getCurrentId());
 
         // checkinTime
         checkin.setCheckinTime(LocalDateTime.now());
 
-        // geom
-        GeometryFactory geometryFactory = new GeometryFactory();
-        checkin.setGeom(geometryFactory.createPoint(new Coordinate(
-                checkinDTO.getLocation().getLongitude(),
-                checkinDTO.getLocation().getLatitude())));
         checkinMapper.insert(checkin);
     }
 

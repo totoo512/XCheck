@@ -28,4 +28,10 @@ public interface CheckinMapper {
      */
     @Delete("delete from checkin where activity_id = #{activityId}")
     void deleteByActivityId(Integer activityId);
+
+    /**
+     * 判断签到信息是否在活动范围内
+     * @param checkin
+     */
+    boolean isWithin(Checkin checkin);
 }

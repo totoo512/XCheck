@@ -2,11 +2,12 @@ package com.zyy.mapper;
 
 import com.zyy.annotation.AutoFill;
 import com.zyy.dto.ActivityListDTO;
+import com.zyy.dto.PointDTO;
 import com.zyy.entity.Activity;
 import com.zyy.enumeration.OperationType;
+import com.zyy.vo.ActivityListByLocationVO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -46,4 +47,12 @@ public interface ActivityMapper {
      */
     @AutoFill(OperationType.UPDATE)
     void update(Activity activity);
+
+    /**
+     * 根据经纬度查询活动
+     *
+     * @param pointDTO
+     * @return
+     */
+    List<ActivityListByLocationVO> listByLocation(PointDTO pointDTO);
 }

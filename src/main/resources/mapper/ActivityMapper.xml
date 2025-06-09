@@ -51,4 +51,13 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="listByLocation" resultType="com.zyy.vo.ActivityListByLocationVO">
+        select a.id, u.name as createName, ST_Distance(l.geom::geography, ST_SetSRID(ST_MakePoint(#{longitude}, #{latitude})::geography, 4326)) as distance,
+               a.radius, a.title, a.start_time, a.end_time, a.description
+        from activity a
+        left join location l on a.id = l.activity_id
+        left join "user" u on a.create_user = u.id
+        order by distance
+    </select>
 </mapper>

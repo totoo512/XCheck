@@ -12,6 +12,7 @@ import com.zyy.mapper.CheckinMapper;
 import com.zyy.mapper.LocationMapper;
 import com.zyy.mapper.UserMapper;
 import com.zyy.service.ActivityService;
+import com.zyy.vo.ActivityListByLocationVO;
 import com.zyy.vo.ActivityVO;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -93,7 +95,7 @@ public class ActivityServiceImpl implements ActivityService {
      * @return
      */
     public List<ActivityVO> listQuery(ActivityListDTO activityListDTO) {
-        List<ActivityVO> activityVOList = new java.util.ArrayList<>();
+        List<ActivityVO> activityVOList = new ArrayList<>();
         List<Activity> activityList = activityMapper.listQuery(activityListDTO);
 
         for (Activity activity : activityList) {
@@ -146,5 +148,15 @@ public class ActivityServiceImpl implements ActivityService {
                         activityDTO.getLocation().getLatitude())))
                 .build();
         locationMapper.update(location);
+    }
+
+    /**
+     * 根据位置查询活动列表
+     *
+     * @param pointDTO
+     * @return
+     */
+    public List<ActivityListByLocationVO> listByLocation(PointDTO pointDTO) {
+        return activityMapper.listByLocation(pointDTO);
     }
 }

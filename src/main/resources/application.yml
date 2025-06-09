@@ -9,7 +9,8 @@ spring:
     url: jdbc:postgresql://150.138.73.10:44272/team_a
     username: postgres
     password: NSc7pBDzGYxmMfjM
-
+server:
+  port: 4396
 # Mybatis
 mybatis:
   #mapper配置文件

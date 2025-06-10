@@ -2,6 +2,7 @@ package com.zyy.service.impl;
 
 import com.zyy.constant.JwtClaimsConstant;
 import com.zyy.constant.MessageConstant;
+import com.zyy.constant.NameConstant;
 import com.zyy.dto.UserDTO;
 import com.zyy.dto.UserLoginDTO;
 import com.zyy.entity.User;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -78,6 +80,10 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         BeanUtils.copyProperties(userDTO, user);
 
+        if (user.getName() == null) {
+            user.setName(NameConstant.DEFAULT_USER_NAME);
+        }
+
         // 对密码进行md5加密
         user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
         userMapper.insert(user);
@@ -96,5 +102,13 @@ public class UserServiceImpl implements UserService {
                 .name(user.getName())
                 .token(token)
                 .build();
+    }
+
+    /**
+     * 查询所有用户
+     * @return
+     */
+    public List<User> listAll() {
+        return userMapper.selectAll();
     }
 }

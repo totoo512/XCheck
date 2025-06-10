@@ -5,6 +5,8 @@ import com.zyy.entity.User;
 import com.zyy.enumeration.OperationType;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface UserMapper {
     /**
@@ -28,4 +30,10 @@ public interface UserMapper {
      * @return
      */
     User selectById(Integer createUser);
+
+    /**
+     * 查询所有用户
+     * @return
+     */
+    List<User> selectAll();
 }

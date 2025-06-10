@@ -64,5 +64,6 @@
     <select id="listByUserId" resultType="com.zyy.entity.Activity">
         <include refid="selectAll"/>
         where create_user = #{userId}
+        order by create_time desc
     </select>
 </mapper>

@@ -2,15 +2,15 @@ package com.zyy.controller;
 
 import com.zyy.dto.UserDTO;
 import com.zyy.dto.UserLoginDTO;
+import com.zyy.entity.User;
 import com.zyy.result.Result;
 import com.zyy.service.UserService;
 import com.zyy.vo.UserLoginVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -42,5 +42,16 @@ public class UserController {
         log.info("新增用户：{}", userDTO);
         UserLoginVO userLoginVO = userService.register(userDTO);
         return Result.success(userLoginVO);
+    }
+
+    /**
+     * 查询全部用户信息
+     * @return
+     */
+    @GetMapping("/listAll")
+    public Result<List<User>> listAll() {
+        log.info("查询全部用户信息");
+        List<User> userList = userService.listAll();
+        return Result.success(userList);
     }
 }

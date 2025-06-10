@@ -5,6 +5,8 @@ import com.zyy.exception.BaseException;
 import com.zyy.exception.DeletionNotAllowedException;
 import com.zyy.result.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.postgresql.util.PSQLException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -22,7 +24,7 @@ public class GlobalExceptionHandler {
      * @param ex
      * @return
      */
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler
     public Result exceptionHandler(BaseException ex){
         log.error("异常信息：{}", ex.getMessage());
         return Result.error(ex.getMessage());
@@ -34,14 +36,14 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler
-    public Result exceptionHandler(SQLIntegrityConstraintViolationException ex) {
+    public Result exceptionHandler(DuplicateKeyException ex) {
         String message = ex.getMessage();
-        if (message.contains("Duplicate entry")) {
-            log.error(MessageConstant.ALREADY_EXITSTS);
-            return Result.error(MessageConstant.ALREADY_EXITSTS);
+        if (message.contains("username")) {
+            log.error(MessageConstant.ACCOUNT_ALREADY_EXISTS);
+            return Result.error(MessageConstant.ACCOUNT_ALREADY_EXISTS);
         }
-        log.error(MessageConstant.UNKNOWN_ERROR);
-        return Result.error(MessageConstant.UNKNOWN_ERROR);
+        log.error(MessageConstant.ALREADY_EXISTS);
+        return Result.error(MessageConstant.ALREADY_EXISTS);
     }
 
     /**

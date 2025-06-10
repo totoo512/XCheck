@@ -29,11 +29,12 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      *
      * @param registry
      */
+    @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         log.info("开始注册自定义拦截器...");
         registry.addInterceptor(jwtTokenAdminInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/activity/{id}", "/activity/list",
+                .excludePathPatterns("/activity/list",
                         "/user/login", "/user/register");
     }
 
@@ -41,6 +42,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      * 设置静态资源映射
      * @param registry
      */
+    @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
@@ -64,6 +66,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      * 配置跨域请求
      * @param registry
      */
+    @Override
     protected void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // 应用于所有路径
                 // 允许的前端域名（根据你的实际部署地址修改）

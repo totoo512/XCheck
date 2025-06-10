@@ -60,4 +60,9 @@
         left join "user" u on a.create_user = u.id
         order by distance
     </select>
+
+    <select id="listByUserId" resultType="com.zyy.entity.Activity">
+        <include refid="selectAll"/>
+        where create_user = #{userId}
+    </select>
 </mapper>

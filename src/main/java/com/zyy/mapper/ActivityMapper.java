@@ -6,6 +6,7 @@ import com.zyy.dto.PointDTO;
 import com.zyy.entity.Activity;
 import com.zyy.enumeration.OperationType;
 import com.zyy.vo.ActivityListByLocationVO;
+import com.zyy.vo.ActivityVO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -55,4 +56,11 @@ public interface ActivityMapper {
      * @return
      */
     List<ActivityListByLocationVO> listByLocation(PointDTO pointDTO);
+
+    /**
+     * 根据用户id查询活动
+     * @param userId
+     * @return
+     */
+    List<Activity> listByUserId(Integer userId);
 }

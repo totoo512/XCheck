@@ -13,4 +13,5 @@ public class MessageConstant {
     public static final String LOGIN_FAILED = "登录失败";
     public static final String PASSWORD_EDIT_FAILED = "密码修改失败";
     public static final String CHECKIN_FAILED = "签到失败";
+    public static final String ACTIVITY_NOT_FOUND = "活动不存在";
 }

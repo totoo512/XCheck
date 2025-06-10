@@ -1,5 +1,6 @@
 package com.zyy.controller;
 
+import com.zyy.context.BaseContext;
 import com.zyy.dto.ActivityDTO;
 import com.zyy.dto.ActivityListDTO;
 import com.zyy.dto.PointDTO;
@@ -91,5 +92,16 @@ public class ActivityController {
         log.info("根据位置查询活动: {}", pointDTO);
         List<ActivityListByLocationVO> activityListByLocationVOList = activityService.listByLocation(pointDTO);
         return Result.success(activityListByLocationVOList);
+    }
+
+    /**
+     * 查询当前登录用户创建的活动
+     * @return
+     */
+    @GetMapping("/listMyActivities")
+    public Result<List<ActivityVO>> listMyActivities() {
+        log.info("查询当前登录用户创建的活动: {}", BaseContext.getCurrentId());
+        List<ActivityVO> activityVOList = activityService.listMyActivities();
+        return Result.success(activityVOList);
     }
 }

@@ -35,6 +35,16 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
      * @return
      */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        String requestURI = request.getRequestURI();
+        String method = request.getMethod();
+
+        // 如果是 GET /activity/{id}，放行
+        if ("GET".equals(method) && requestURI.matches("/activity/\\d+")) {
+            return true;
+        }
+
+        log.info("拦截到请求: {} {}", request.getMethod(), request.getRequestURI());
+
         //判断当前拦截到的是Controller的方法还是其他资源
         if (!(handler instanceof HandlerMethod)) {
             //当前拦截到的不是动态方法，直接放行

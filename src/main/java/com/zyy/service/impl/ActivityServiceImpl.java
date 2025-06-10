@@ -1,5 +1,6 @@
 package com.zyy.service.impl;
 
+import com.zyy.constant.MessageConstant;
 import com.zyy.context.BaseContext;
 import com.zyy.dto.ActivityDTO;
 import com.zyy.dto.ActivityListDTO;
@@ -7,6 +8,7 @@ import com.zyy.dto.PointDTO;
 import com.zyy.entity.Activity;
 import com.zyy.entity.Location;
 import com.zyy.entity.User;
+import com.zyy.exception.ActivityNotFoundException;
 import com.zyy.mapper.ActivityMapper;
 import com.zyy.mapper.CheckinMapper;
 import com.zyy.mapper.LocationMapper;
@@ -74,6 +76,9 @@ public class ActivityServiceImpl implements ActivityService {
     public ActivityVO getById(Integer id) {
         ActivityVO activityVO = new ActivityVO();
         Activity activity = activityMapper.selectById(id);
+        if (activity == null) {
+            throw new ActivityNotFoundException(MessageConstant.ACTIVITY_NOT_FOUND);
+        }
         BeanUtils.copyProperties(activity, activityVO);
 
         // 设置地点坐标
@@ -158,5 +163,32 @@ public class ActivityServiceImpl implements ActivityService {
      */
     public List<ActivityListByLocationVO> listByLocation(PointDTO pointDTO) {
         return activityMapper.listByLocation(pointDTO);
+    }
+
+    /**
+     * 查询当前登录用户创建的活动
+     * @return
+     */
+    public List<ActivityVO> listMyActivities() {
+        List<ActivityVO> activityVOList = new ArrayList<>();
+        List<Activity> activityList = activityMapper.listByUserId(BaseContext.getCurrentId());
+
+        for (Activity activity : activityList) {
+            ActivityVO activityVO = new ActivityVO();
+            BeanUtils.copyProperties(activity, activityVO);
+
+            // 设置创建者名称
+            User user = userMapper.selectById(activity.getCreateUser());
+            activityVO.setCreateName(user.getName());
+
+            // 设置地点坐标
+            Location location = locationMapper.selectByActivityId(activity.getId());
+            activityVO.setLocation(new PointDTO(
+                    location.getGeom().getX(),
+                    location.getGeom().getY()));
+            activityVOList.add(activityVO);
+        }
+
+        return activityVOList;
     }
 }

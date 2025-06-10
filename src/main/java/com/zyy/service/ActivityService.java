@@ -20,4 +20,6 @@ public interface ActivityService {
     void update(ActivityDTO activityDTO);
 
     List<ActivityListByLocationVO> listByLocation(PointDTO pointDTO);
+
+    List<ActivityVO> listMyActivities();
 }

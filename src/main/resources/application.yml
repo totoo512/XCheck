@@ -6,7 +6,7 @@ spring:
   # 数据库配置
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://150.138.73.10:44272/team_a
+    url: jdbc:postgresql://150.138.73.10:44272/team_a?charSet=UTF-8
     username: postgres
     password: NSc7pBDzGYxmMfjM
 server:

@@ -13,6 +13,7 @@ import com.zyy.mapper.ActivityMapper;
 import com.zyy.mapper.CheckinMapper;
 import com.zyy.mapper.LocationMapper;
 import com.zyy.mapper.UserMapper;
+import com.zyy.result.MyActivitiesResult;
 import com.zyy.service.ActivityService;
 import com.zyy.vo.ActivityListByLocationVO;
 import com.zyy.vo.ActivityVO;
@@ -167,10 +168,15 @@ public class ActivityServiceImpl implements ActivityService {
 
     /**
      * 查询当前登录用户创建的活动
+     *
      * @return
      */
-    public List<ActivityVO> listMyActivities() {
-        List<ActivityVO> activityVOList = new ArrayList<>();
+    public MyActivitiesResult listMyActivities() {
+        MyActivitiesResult myActivitiesResult = new MyActivitiesResult();
+
+        myActivitiesResult.setName(userMapper.selectById(BaseContext.getCurrentId()).getName());
+
+        myActivitiesResult.setActivities(new ArrayList<>());
         List<Activity> activityList = activityMapper.listByUserId(BaseContext.getCurrentId());
 
         for (Activity activity : activityList) {
@@ -186,9 +192,9 @@ public class ActivityServiceImpl implements ActivityService {
             activityVO.setLocation(new PointDTO(
                     location.getGeom().getX(),
                     location.getGeom().getY()));
-            activityVOList.add(activityVO);
+            myActivitiesResult.getActivities().add(activityVO);
         }
 
-        return activityVOList;
+        return myActivitiesResult;
     }
 }

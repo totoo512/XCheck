@@ -6,7 +6,7 @@ import com.zyy.dto.CheckinDTO;
 import com.zyy.dto.CheckinListDTO;
 import com.zyy.dto.PointDTO;
 import com.zyy.entity.Checkin;
-import com.zyy.exception.CheckinOutOfRegionException;
+import com.zyy.exception.CheckinFailedException;
 import com.zyy.mapper.ActivityMapper;
 import com.zyy.mapper.CheckinMapper;
 import com.zyy.mapper.UserMapper;
@@ -14,7 +14,6 @@ import com.zyy.service.CheckinService;
 import com.zyy.vo.CheckinVO;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.Point;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +37,16 @@ public class CheckinServiceImpl implements CheckinService {
      * @param checkinDTO
      */
     public void checkin(CheckinDTO checkinDTO) {
+        if (checkinDTO.getLocation() == null
+                || checkinDTO.getLocation().getLatitude() == null
+                || checkinDTO.getLocation().getLongitude() == null) {
+            throw new CheckinFailedException(MessageConstant.POSITIONING_FAILED);
+        }
+
+        if (checkinMapper.selectByActivityIdAndUserId(checkinDTO.getActivityId(), BaseContext.getCurrentId()) != 0) {
+            throw new CheckinFailedException(MessageConstant.ALREADY_CHECKIN);
+        }
+
         Checkin checkin = new Checkin();
         BeanUtils.copyProperties(checkinDTO, checkin);
 
@@ -47,8 +56,9 @@ public class CheckinServiceImpl implements CheckinService {
                 checkinDTO.getLocation().getLongitude(),
                 checkinDTO.getLocation().getLatitude())));
         if (!checkinMapper.isWithin(checkin)) {
-            throw new CheckinOutOfRegionException(MessageConstant.CHECKIN_FAILED);
+            throw new CheckinFailedException(MessageConstant.CHECKIN_OUT_OF_RANGE);
         }
+
 
         // userId
         checkin.setUserId(BaseContext.getCurrentId());

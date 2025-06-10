@@ -3,6 +3,7 @@ package com.zyy.service;
 import com.zyy.dto.ActivityDTO;
 import com.zyy.dto.ActivityListDTO;
 import com.zyy.dto.PointDTO;
+import com.zyy.result.MyActivitiesResult;
 import com.zyy.vo.ActivityListByLocationVO;
 import com.zyy.vo.ActivityVO;
 
@@ -21,5 +22,5 @@ public interface ActivityService {
 
     List<ActivityListByLocationVO> listByLocation(PointDTO pointDTO);
 
-    List<ActivityVO> listMyActivities();
+    MyActivitiesResult listMyActivities();
 }

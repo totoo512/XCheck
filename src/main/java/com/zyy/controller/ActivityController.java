@@ -4,6 +4,7 @@ import com.zyy.context.BaseContext;
 import com.zyy.dto.ActivityDTO;
 import com.zyy.dto.ActivityListDTO;
 import com.zyy.dto.PointDTO;
+import com.zyy.result.MyActivitiesResult;
 import com.zyy.result.Result;
 import com.zyy.service.ActivityService;
 import com.zyy.vo.ActivityListByLocationVO;
@@ -99,9 +100,9 @@ public class ActivityController {
      * @return
      */
     @GetMapping("/listMyActivities")
-    public Result<List<ActivityVO>> listMyActivities() {
+    public Result<MyActivitiesResult> listMyActivities() {
         log.info("查询当前登录用户创建的活动: {}", BaseContext.getCurrentId());
-        List<ActivityVO> activityVOList = activityService.listMyActivities();
-        return Result.success(activityVOList);
+        MyActivitiesResult myActivitiesResult = activityService.listMyActivities();
+        return Result.success(myActivitiesResult);
     }
 }

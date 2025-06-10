@@ -4,6 +4,7 @@ import com.zyy.dto.CheckinListDTO;
 import com.zyy.entity.Checkin;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -34,4 +35,13 @@ public interface CheckinMapper {
      * @param checkin
      */
     boolean isWithin(Checkin checkin);
+
+    /**
+     * 判断用户是否已经签到过
+     * @param activityId
+     * @param userId
+     * @return
+     */
+    @Select("select count(0) from checkin where activity_id = #{activityId} and user_id = #{userId}")
+    Integer selectByActivityIdAndUserId(Integer activityId, Integer userId);
 }

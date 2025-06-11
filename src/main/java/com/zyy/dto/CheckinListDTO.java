@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 public class CheckinListDTO {
 
     private Integer activityId;
-    private Integer userId;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startTime;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

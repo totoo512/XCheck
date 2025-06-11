@@ -6,6 +6,7 @@ import com.zyy.dto.CheckinDTO;
 import com.zyy.dto.CheckinListDTO;
 import com.zyy.dto.PointDTO;
 import com.zyy.entity.Checkin;
+import com.zyy.entity.User;
 import com.zyy.exception.CheckinFailedException;
 import com.zyy.mapper.ActivityMapper;
 import com.zyy.mapper.CheckinMapper;
@@ -79,12 +80,16 @@ public class CheckinServiceImpl implements CheckinService {
         List<Checkin> checkinList = checkinMapper.list(checkinListDTO);
 
         for (Checkin checkin : checkinList) {
-            CheckinVO checkinVO = new CheckinVO();
-            checkinVO.setId(checkin.getId());
-            checkinVO.setActivityTitle(activityMapper.selectById(checkin.getActivityId()).getTitle());
-            checkinVO.setLocation(new PointDTO(checkin.getGeom().getX(), checkin.getGeom().getY()));
-            checkinVO.setUserName(userMapper.selectById(checkin.getUserId()).getName());
-            checkinVO.setCheckinTime(checkin.getCheckinTime());
+            User user = userMapper.selectById(checkin.getUserId());
+
+            CheckinVO checkinVO = CheckinVO.builder()
+                    .id(checkin.getId())
+                    .activityTitle(activityMapper.selectById(checkin.getActivityId()).getTitle())
+                    .location(new PointDTO(checkin.getGeom().getX(), checkin.getGeom().getY()))
+                    .name(user.getName())
+                    .username(user.getUsername())
+                    .checkinTime(checkin.getCheckinTime())
+                    .build();
 
             checkinVOList.add(checkinVO);
         }

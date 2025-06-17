@@ -71,13 +71,11 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         registry.addMapping("/**") // 应用于所有路径
                 // 允许的前端域名（根据你的实际部署地址修改）
                 .allowedOrigins(
-                        "http://localhost:8080",       // 本地开发
-                        "http://192.168.31.199",       // 生产前端
-                        "http://127.0.0.1",       // 生产前端
+                        "http://localhost:8080",    // 本地开发
+                        "http://192.168.31.199",    // 生产前端
+                        "http://127.0.0.1:5500",    // 生产前端
                         "http://192.168.214.27",
-                        "http://111.229.121.204",
-                        "http://127.0.0.1:5500"
-//                        "https://www.yourfrontend.com" // 生产带www的前端
+                        "https://www.yourfrontend.com" // 发布域名
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // 允许的HTTP方法
                 .allowedHeaders("*")               // 允许所有请求头

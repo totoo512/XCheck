@@ -94,8 +94,8 @@
 | **create_user**                               | INTEGER                                     | 创建者ID                                         |
 | **radius**                                    | INTEGER                                     | 可签到半径                                         |
 | **title**                                     | VARCHAR(20)                                 | 活动标题                                          |
-| **start****_****time**                        | TIMESTAMP                                   | 开始时间                                          |
-| **end****_****time**                          | TIMESTAMP                                   | 结束时间                                          |
+| **start_time**                                | TIMESTAMP                                   | 开始时间                                          |
+| **end_time**                                  | TIMESTAMP                                   | 结束时间                                          |
 | **description**                               | VARCHAR(300)                                | 简介                                            |
 | **create_time**                               | TIMESTAMP                                   | 创建时间                                          |
 | **update_time**                               | TIMESTAMP                                   | 修改时间                                          |
